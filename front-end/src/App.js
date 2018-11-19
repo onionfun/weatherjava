@@ -108,9 +108,9 @@ class App extends Component {
         const parsedEdit = await editedUser.json();
         console.log(parsedEdit);
         this.setState({
-            username: parsedEdit.data.username,
-            password: parsedEdit.data.password,
-            location: parsedEdit.data.location,
+            username: parsedEdit.username,
+            password: parsedEdit.password,
+            location: parsedEdit.location,
         })
         console.log(this.state.location);
     }catch(err){

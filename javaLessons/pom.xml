@@ -17,11 +17,11 @@
     This is where new packages will be added as we add functionality. <-->
     <dependencies>
         <!-- >something about json<-->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20180813</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--&lt;!&ndash;<groupId>org.json</groupId>&ndash;&gt;-->
+            <!--&lt;!&ndash;<artifactId>json</artifactId>&ndash;&gt;-->
+            <!--&lt;!&ndash;<version>20180813</version>&ndash;&gt;-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
