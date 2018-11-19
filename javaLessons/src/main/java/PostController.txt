@@ -1,0 +1,63 @@
+package fullstack;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Optional;
+
+
+@RestController
+public class PostController {
+
+    @Autowired
+    private PostRepo postRepo;
+    @Autowired
+    private UserRepo userRepo;
+
+    @GetMapping("/posts")
+    public Iterable<Post> getPosts(){
+        return postRepo.findAll();
+    }
+
+    @PostMapping("/posts")
+    public Post createPost(@RequestBody Post post, HttpSession session) throws IOException {
+        if(session.getAttribute(name:"username")==null){
+            throw new Exception("log in");
+        }
+        Long currentUsername = session.getAttribute( name:"username").toString();
+        User authorOptional = userRepo.findByUsername(currentUsername); //replace 1L with getattribute out of session
+            post.setUser(author);
+            return postRepo.save(post);
+
+    }
+
+    @GetMapping("/posts/{id}")
+    public String getPost(@PathVariable Long id) throws Exception{
+        Optional<Post> postOptional = postRepo.findById(id);
+        if(postOptional.isPresent()){
+            Post post = postOptional.get();
+            return post;
+    }else{
+        throw new Exception("no post")
+    }
+
+    @DeleteMapping("/posts/{id}")
+    public String deletePost(@PathVariable Long id){
+        postRepo.deleteById(id);
+        return "Deleting" + id.toString();
+    }
+
+    @PutMapping("/posts/{id}")
+    public String updatePost(@PathVariable Long id, @ModelAttribute Post post){
+        Optional<Post> postOptional = postRepo.findById(id);
+
+            Post post = postOptional.get();
+
+        post.setText(postBody.getText());
+        Post updatedPost = postRepo.save(post);
+        return updatedPost;
+    }
+
+}
