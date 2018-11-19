@@ -24,9 +24,11 @@ public class UserController {
         return userRepo.findAll();
     }
 
-    @PostMapping("/users")
-    public User createUser(@ModelAttribute User user) {
+    @PostMapping("/register")
+    public User createUser(@RequestBody User user) {
+        System.out.println("TEST MESSA GAY");
         User createdUser = userService.saveUser(user);
+        System.out.println(createdUser);
         return createdUser;
 
         }
@@ -51,10 +53,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public User login(@RequestBody User login, HttpSession session) throws IOException {
+    public User login(@RequestBody User login, HttpSession session) throws IOException{
+        System.out.println(login.getUsername());
         bCryptPasswordEncoder = new BCryptPasswordEncoder();
         User user = userRepo.findByUsername(login.getUsername());
         if(user ==  null){
+            System.out.println("no user");
             throw new IOException("Invalid Credentials");
         }
         boolean valid = bCryptPasswordEncoder.matches(login.getPassword(), user.getPassword());
@@ -62,7 +66,10 @@ public class UserController {
             session.setAttribute("username", user.getUsername());
             return user;
         }else{
+            System.out.println("bad password");
             throw new IOException("Invalid Credentials");
         }
     }
+
+
 }

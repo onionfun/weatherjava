@@ -34,7 +34,7 @@ export default class Weather extends Component {
         }
         else if(this.props.temp < 45){
             this.setState({
-                clothingFromTemp: "It's cold af.",
+                clothingFromTemp: "Put your booties on cuz it's cold out there.",
                 clothingImage: santa
             })
         }

@@ -32,7 +32,7 @@ class App extends Component {
     console.log(this.state);
     try{
       console.log("GOT HERE, TOO")
-      const createUser = await fetch('http://localhost:9000/auth/register', {
+      const createUser = await fetch('http://localhost:8080/register', {
         method: 'POST',
         body: JSON.stringify(this.state),
         headers: {
@@ -41,17 +41,13 @@ class App extends Component {
       });
       const parsedResponse = await createUser.json();
       console.log(parsedResponse, ' this is response')
-      if(parsedResponse.status == 200){
         this.setState({
           loggedIn: true,
           // this isn't a real login - need to align it with the back-end to sort that out
-          username: parsedResponse.data.username,
-          location: parsedResponse.data.location,
-          id: parsedResponse.data._id
+          username: parsedResponse.username,
+          location: parsedResponse.location,
+          id: parsedResponse.id
         })
-      } else if (parsedResponse.status == 500){
-        console.log("INTERNAL SERVER ERROR")
-      }
     }catch(err){
       console.log(err, " error")
     }
@@ -59,9 +55,9 @@ class App extends Component {
 
   submitLogin = async (e) => {
     e.preventDefault();
-    console.log("GOT LOGS")
+    console.log("GOT LOGS" + this.state)
     try{
-      const loggedUser = await fetch('http://localhost:9000/auth/login', {
+      const loggedUser = await fetch('http://localhost:8080/login', {
         credentials: 'include',
         method: 'POST',
         body: JSON.stringify(this.state),
@@ -71,17 +67,13 @@ class App extends Component {
       });
       const parsedLogged = await loggedUser.json();
       console.log(parsedLogged, ' login successful')
-      if(parsedLogged.status == 200){
         this.setState({
           loggedIn: true,
-          username: parsedLogged.data.username,
-          location: parsedLogged.data.location,
-          id: parsedLogged.data._id
+          username: parsedLogged.username,
+          location: parsedLogged.location,
+          id: parsedLogged.id
         })
         console.log(this.state);
-      } else if (parsedLogged.status == 500){
-        console.log("INTERNAL SERVER ERROR")
-      }
     }catch(err){
       console.log(err, " error")
     }
@@ -90,7 +82,7 @@ class App extends Component {
   deletedUser = async(id) => {
     console.log("delete user " + id);
 
-    const deleted = await fetch("http://localhost:9000/users/" + this.state.id, {
+    const deleted = await fetch("http://localhost:8080/users/" + this.state.id, {
       //credentials: 'include',
         method: "DELETE"
     })
@@ -106,7 +98,7 @@ class App extends Component {
     console.log("EDITS SUBMITTED");
     console.log(this.state.id)
     try{
-        const editedUser = await fetch("http://localhost:9000/users/" + this.state.id, {
+        const editedUser = await fetch("http://localhost:8080/users/" + this.state.id, {
           method: 'PUT',
           body: JSON.stringify(this.state),
           headers: {
