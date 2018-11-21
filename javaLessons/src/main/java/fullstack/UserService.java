@@ -7,24 +7,30 @@ import org.springframework.stereotype.Service;
 @Service("userService")
 public class UserService {
 
-    private UserRepo userRepository;
+    private UserRepo userRepo;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserService(UserRepo userRepository,
                        BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userRepository = userRepository;
+        this.userRepo = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public User findUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepo.findByUsername(username);
     }
 
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        userRepo.save(user);
         return user;
     }
+
+//    public User updateUser(String id, User user){
+//        user.setUsername(user.getUsername());
+//        System.out.println(user);
+//        return userRepo.save(user);
+//    }
 
 }

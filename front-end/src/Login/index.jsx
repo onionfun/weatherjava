@@ -6,7 +6,7 @@ class Login extends Component {
     render(){
         return(
             <div>
-                {this.props.loggedIn ? <Redirect to="/weather"/>: <div/> }
+                {this.props.logged_in ? <Redirect to="/weather"/>: <div/> }
                 <div className="spacer"/>
                 <h1>Login or Register</h1>
                 <h2>Login</h2>

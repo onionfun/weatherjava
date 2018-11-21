@@ -18,6 +18,7 @@ class App extends Component {
       location: Number,
       loggedIn: false,
       id: "",
+      isOpen: false
     }
   }
   handleInputs = (e) => {
@@ -96,17 +97,21 @@ class App extends Component {
   submitEdits = async (e) => {
     // e.preventDefault();
     console.log("EDITS SUBMITTED");
-    console.log(this.state.id)
+    console.log(this.state)
     try{
-        const editedUser = await fetch("http://localhost:8080/users/" + this.state.id, {
+        const fetchRequest = ("http://localhost:8080/users/" + this.state.id)  
+        console.log(fetchRequest);
+        const editedUser = await fetch(fetchRequest, {
           method: 'PUT',
           body: JSON.stringify(this.state),
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json'
         } 
         });
+        console.log(editedUser);
         const parsedEdit = await editedUser.json();
-        console.log(parsedEdit);
+        console.log(parsedEdit); // not showing in console??
         this.setState({
             username: parsedEdit.username,
             password: parsedEdit.password,
@@ -145,7 +150,7 @@ class App extends Component {
           <Route exact path="/" render={this.login}/>
           <Route exact path="/login" render={this.login}/>
           <Route exact path="/weather" render={this.weatherContainer}/>
-          <Route exact path="/user/edit" render={this.profile}/>
+          <Route exact path="/users/edit" render={this.profile}/>
         </Switch>
       </div>
     );

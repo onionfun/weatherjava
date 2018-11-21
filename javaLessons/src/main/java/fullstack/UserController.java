@@ -31,7 +31,7 @@ public class UserController {
         System.out.println(createdUser);
         return createdUser;
 
-        }
+    }
 
     @GetMapping("/users/{id}")
     public User getUser(@PathVariable Long id) {
@@ -48,8 +48,14 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public String updateUser(@PathVariable Long id) {
-        return "Updated" + id.toString();
+    public User updateUser(@PathVariable Long id, @ModelAttribute User user) {
+            Optional<User> userOptional = userRepo.findById(id);
+
+            User user = userOptional.get();
+
+            user.setText(userUsername.getText());
+            User updatedPost = userRepo.save(user);
+            return updatedPost;
     }
 
     @PostMapping("/login")
